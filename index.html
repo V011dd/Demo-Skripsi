@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SyncHealth — Puskesmas Jumpandang Baru</title>
+<link href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div id="login-view" class="login-container">
+  <div class="login-box">
+    <div class="logo-icon" style="margin: 0 auto 16px; width: 60px; height: 60px; font-size: 30px;"><i class="ti ti-heart-plus"></i></div>
+    <h2 style="text-align: center; margin-bottom: 8px;">SyncHealth</h2>
+    <p style="text-align: center; color: var(--text3); font-size: 13px; margin-bottom: 24px;">Puskesmas Jumpandang Baru</p>
+    
+    <div class="form-group">
+      <label>Username</label>
+      <input type="text" id="login-username" placeholder="Masukkan username">
+    </div>
+    <div class="form-group">
+      <label>Password</label>
+      <input type="password" id="login-password" placeholder="Masukkan password">
+    </div>
+    <button onclick="handleLogin()" class="btn-primary" style="width: 100%; margin-top: 10px;">Masuk</button>
+    <p style="text-align: center; font-size: 12px; color: var(--text2); margin-top: 16px;">
+      Akun Demo: <br>
+      Admin: <b>admin</b> / <b>123</b> <br>
+      Nakes KIA: <b>drsari</b> / <b>123</b>
+    </p>
+  </div>
+</div>
+
+<div id="app-view" style="display: none; width: 100%;">
+  <div class="sidebar">
+    <div class="sidebar-logo">
+      <div class="logo-icon"><i class="ti ti-heart-plus"></i></div>
+      <div>
+        <div class="logo-text">SyncHealth</div>
+        <div class="logo-sub">Puskesmas Jumpandang Baru</div>
+      </div>
+    </div>
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-label">Menu Utama</div>
+    <div class="nav-item active" id="nav-dash" onclick="goPage('dash')" style="background:linear-gradient(135deg,#16a34a,#0d9488)">
+      <i class="ti ti-layout-dashboard"></i> Dashboard
+    </div>
+    <div class="nav-item" id="nav-tugas" onclick="goPage('tugas')">
+      <i class="ti ti-checklist"></i> Manajemen Tugas <span class="badge" id="badge-tugas-total">0</span>
+    </div>
+    <div class="nav-item" id="nav-eval" onclick="goPage('eval')">
+      <i class="ti ti-chart-bar"></i> Evaluasi Capaian
+    </div>
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-label">Lainnya</div>
+    <div class="nav-item"><i class="ti ti-bell"></i> Notifikasi</div>
+    <div class="nav-item" onclick="handleLogout()" style="color: var(--red);"><i class="ti ti-logout"></i> Logout</div>
+    <div class="sidebar-bottom">
+      <div class="user-card">
+        <div class="avatar" id="sidebar-avatar" style="background:var(--green-l);color:var(--green-d)"></div>
+        <div>
+          <div style="font-size:12px;font-weight:700" id="sidebar-name"></div>
+          <div style="font-size:10px;color:var(--text3)" id="sidebar-role"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="main">
+    <div class="topbar">
+      <div class="topbar-title" id="page-title">Dashboard</div>
+      <div class="topbar-search"><i class="ti ti-search" style="font-size:15px"></i><span>Cari tugas, program...</span></div>
+      <div class="notif-btn"><i class="ti ti-bell"></i><div class="notif-dot"></div></div>
+      <div class="avatar" id="topbar-avatar" style="width:34px;height:34px;background:var(--green-l);color:var(--green-d);font-size:12px;font-weight:800;cursor:pointer;border-radius:50%;flex-shrink:0"></div>
+    </div>
+    
+    <div class="content">
+      <div class="page active" id="page-dash">
+        <div class="stat-grid">
+          <div class="stat-card" style="background:linear-gradient(135deg,#16a34a,#0d9488);color:#fff">
+            <div class="stat-label">Total Tugas Bulan Ini</div>
+            <div class="stat-val" id="dash-total-tugas">0</div>
+            <div class="stat-sub">Tugas aktif & selesai</div>
+            <i class="ti ti-checklist stat-icon"></i>
+          </div>
+          <div class="stat-card" style="background:linear-gradient(135deg,#2563eb,#7c3aed);color:#fff">
+            <div class="stat-label">Program Terdaftar</div>
+            <div class="stat-val">5</div>
+            <div class="stat-sub">Sesuai program puskesmas</div>
+            <i class="ti ti-clipboard-list stat-icon"></i>
+          </div>
+          <div class="stat-card" style="background:linear-gradient(135deg,#ea580c,#d97706);color:#fff">
+            <div class="stat-label">Rata-rata Capaian</div>
+            <div class="stat-val" id="dash-avg-capaian">0%</div>
+            <div class="stat-sub">Akumulasi seluruh program</div>
+            <i class="ti ti-chart-pie stat-icon"></i>
+          </div>
+          <div class="stat-card" style="background:linear-gradient(135deg,#db2777,#7c3aed);color:#fff">
+            <div class="stat-label">Bulan Berjalan</div>
+            <div class="stat-val" id="dash-current-month">-</div>
+            <div class="stat-sub">Tahun 2026</div>
+            <i class="ti ti-calendar stat-icon"></i>
+          </div>
+        </div>
+
+        <div class="section-grid">
+          <div class="card">
+            <div class="section-title"><div class="dot" style="background:var(--teal)"></div>Capaian Program Tahun Ini</div>
+            <div id="dash-capaian-program-list">
+              </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="page" id="page-tugas">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
+          <div>
+            <div style="font-size:11px;color:var(--text3);font-weight:600;margin-bottom:2px">Sistem Monitoring Terintegrasi</div>
+            <div style="font-size:13px;font-weight:700;color:var(--text)" id="tugas-stats-text">0 tugas aktif · 0 selesai</div>
+          </div>
+          <button id="btn-tambah-manual" onclick="openTaskModal()" style="display:none; background:linear-gradient(135deg,#16a34a,#0d9488);color:#fff;border:none;border-radius:10px;padding:9px 18px;font-family:var(--font);font-size:13px;font-weight:700;cursor:pointer;align-items:center;gap:6px">
+            <i class="ti ti-plus"></i> Tambah Tugas Manual
+          </button>
+        </div>
+
+        <div class="kanban">
+          <div class="kanban-col" id="col-todo" style="display: none;"></div>
+          
+          <div class="kanban-col" id="col-progress" style="background:var(--blue-l)">
+            <div class="col-header">
+              <div class="col-title"><span style="width:10px;height:10px;background:var(--blue);border-radius:50%;display:inline-block"></span>Tugas Aktif Bulan Ini</div>
+              <span class="col-count" style="background:#bfdbfe;color:var(--blue-d)">0</span>
+            </div>
+            <div class="task-list-container" style="display:flex; flex-direction:column; gap:12px;"></div>
+          </div>
+
+          <div class="kanban-col" id="col-done" style="background:var(--green-l)">
+            <div class="col-header">
+              <div class="col-title"><span style="width:10px;height:10px;background:var(--green);border-radius:50%;display:inline-block"></span>Selesai Dikerjakan</div>
+              <span class="col-count" style="background:#bbf7d0;color:var(--green-d)">0</span>
+            </div>
+            <div class="task-list-container" style="display:flex; flex-direction:column; gap:12px;"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="page" id="page-eval">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
+          <div>
+            <div style="font-size:11px;color:var(--text3);font-weight:600;margin-bottom:2px">Tahun 2026 · Puskesmas Jumpandang Baru</div>
+            <div style="font-size:13px;font-weight:700">Klik kartu program untuk melihat rincian progres data</div>
+          </div>
+          <div style="display:flex;gap:8px">
+            <button class="filter-chip active">Semua Program</button>
+            <button class="filter-chip" onclick="exportToCSV()" style="background: var(--green-l); color: var(--green-d); border-color: var(--green);">
+              <i class="ti ti-download" style="font-size:13px;vertical-align:-1px"></i> Export Excel/CSV
+            </button>
+          </div>
+        </div>
+        
+        <div class="eval-grid" id="eval-cards-container">
+          </div>
+
+        <div class="detail-grid">
+          <div class="card">
+            <div class="section-title"><div class="dot" id="detail-dot" style="background:var(--green)"></div><span id="detail-title">Detail Capaian</span></div>
+            <table class="month-table">
+              <thead><tr><th>Bulan</th><th>Realisasi Input</th><th>Status</th></tr></thead>
+              <tbody id="detail-tbody"></tbody>
+            </table>
+          </div>
+          <div class="card">
+            <div class="section-title"><div class="dot" id="chart-dot" style="background:var(--green)"></div><span id="chart-title">Ringkasan</span></div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+              <div style="background:#f8fafc;border-radius:8px;padding:10px 12px">
+                <div style="font-size:10px;font-weight:700;color:var(--text3)">Target Setahun</div>
+                <div id="sum-target" style="font-size:18px;font-weight:800;color:var(--text)">0</div>
+              </div>
+              <div style="background:#f8fafc;border-radius:8px;padding:10px 12px">
+                <div style="font-size:10px;font-weight:700;color:var(--text3)">Terakumulasi</div>
+                <div id="sum-actual" style="font-size:18px;font-weight:800;color:var(--text)">0</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="task-modal" class="modal-backdrop" style="display: none;">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h3 id="modal-title-text">Input Realisasi Capaian Bulan Ini</h3>
+      <button onclick="closeTaskModal()" class="btn-close">&times;</button>
+    </div>
+    <form id="task-form" onsubmit="saveReport(event)">
+      <input type="hidden" id="edit-task-id">
+      <input type="hidden" id="task-program">
+      <input type="hidden" id="report-month">
+      
+      <div class="form-group">
+        <label>Nama Tugas / Program</label>
+        <input type="text" id="task-name" readonly style="background: #f1f5f9;">
+      </div>
+      
+      <div class="form-group">
+        <label>Bulan Laporan</label>
+        <input type="text" id="report-month-name" readonly style="background: #f1f5f9;">
+      </div>
+
+      <div class="form-group">
+        <label for="report-actual">Realisasi Capaian (Jumlah Riil)</label>
+        <input type="number" id="report-actual" required placeholder="Contoh: 40" min="0">
+      </div>
+
+      <div class="form-actions" style="margin-top: 20px;">
+        <button type="button" onclick="closeTaskModal()" class="btn-secondary">Batal</button>
+        <button type="submit" class="btn-primary">Simpan Laporan</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script src="js/main.js"></script>
+</body>
+</html>
